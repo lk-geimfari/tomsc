@@ -12,7 +12,13 @@ You will need:
 
 ## Running
 
-Go to the project directory (in where Dockerfile is) and then build FastAPI image:
+Clone repository and go to the project directory (in where Dockerfile is):
+```
+~ git clone git@github.com:lk-geimfari/tomsc.git
+~ cd tomsc
+```
+
+and then build FastAPI image:
 
 ```
 docker build -t tomsc .
