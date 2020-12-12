@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="assets/css/bulma.min.css">
+</head>
+<body>
+<section class="section">
+  <div class="container mt-4">
+
+    <div class="text-center">
+      <h1 class="mb-4">Tom's Calculator</h1>
+    </div>
+    <div class="field">
+      <label class="label">Items amount</label>
+      <div class="control">
+        <input class="input" id="amount" type="text" placeholder="1">
+      </div>
+      <p id="amount-error" class="help is-danger is-hidden mt-2">
+        Please, enter the amount of items
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Item price</label>
+      <div class="control">
+        <input class="input" id="price" type="text" placeholder="">
+      </div>
+      <p id="price-error" class="help is-danger is-hidden mt-2">
+        Please, enter the price per item
+      </p>
+    </div>
+
+    <div class="field">
+      <div class="control">
+        <div class="select">
+          <select id="select-state">
+            <option value="">State</option>
+            <option value="UT">Utah</option>
+            <option value="NV">Nevada</option>
+            <option value="TX">Texas</option>
+            <option value="AL">Alabama</option>
+            <option value="CA">California</option>
+          </select>
+        </div>
+        <p id="state-error" class="help is-danger is-hidden mt-2">
+          Please, enter the price per item
+        </p>
+      </div>
+    </div>
+
+    <span id="total-price" class="tag is-info is-light is-medium mb-2 is-hidden"></span>
+
+
+    <div class="field is-grouped">
+      <div class="control">
+        <button id="calculate" class="button is-link">Calculate</button>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="assets/js/axios.min.js"></script>
+<script src="assets/js/numeral.min.js"></script>
+<script type="application/javascript">
+    (function () {
+        const apiUrl = 'http://localhost:80/' // <- CHANGE THIS LINE IF YOU'RE USING DIFFERENT HOST/PORT
+        let calculateButton = document.getElementById('calculate')
+
+        calculateButton.addEventListener('click', (event) => {
+            let price = document.getElementById('price').value || 0
+            let amount = document.getElementById('amount').value || 0
+            let state = document.getElementById("select-state").value
+            let priceErrorElement = document.getElementById('price-error')
+            let amountErrorElement = document.getElementById("amount-error")
+            let stateErrorElement = document.getElementById('state-error')
+            let totalPriceElement = document.getElementById('total-price')
+
+            if (!event.target.matches('calculate')) {
+
+                if (!amount) {
+                    amountErrorElement.classList.remove('is-hidden')
+                } else {
+                    amountErrorElement.classList.add('is-hidden')
+                }
+
+                if (!price) {
+                    priceErrorElement.classList.remove('is-hidden')
+                } else {
+                    priceErrorElement.classList.add('is-hidden')
+                }
+
+                if (!state) {
+                    stateErrorElement.classList.remove('is-hidden')
+                } else {
+                    stateErrorElement.classList.add('is-hidden')
+                }
+
+                if (amount && price && state) {
+                    axios.get(apiUrl, {
+                        params: {
+                            price: price,
+                            amount: amount,
+                            state: state,
+                        }
+                    }).then((response) => {
+                        let tax = response.data['tax']
+                        let totalPrice = response.data['total_price']
+                        let finalPrice = Number(totalPrice).toFixed(2)
+                        finalPrice = numeral(finalPrice).format('0,0 $');
+                        totalPriceElement.innerHTML = `Total price (including state tax ${tax}%) is ${finalPrice}`
+                        totalPriceElement.classList.remove('is-hidden')
+                    });
+
+                }
+                event.preventDefault();
+            }
+        })
+    })()
+</script>
+</body>
+</html>
