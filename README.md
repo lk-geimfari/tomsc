@@ -30,7 +30,7 @@ Run a container based on your image:
 docker run --name tomsc -p 80:80 tomsc
 ```
 
-Now you can use frontend, just open file `fronted/index.html` in your browser.
+Now you can use frontend, just open file `fronted/index.html` in your browser or just go to [isaak.dev/tomsc/frontend/](https://isaak.dev/tomsc/frontend/)
 
 
 ## Tests
