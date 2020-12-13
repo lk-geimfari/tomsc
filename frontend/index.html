@@ -106,8 +106,7 @@
                     }).then((response) => {
                         let tax = response.data['tax']
                         let totalPrice = response.data['total_price']
-                        let finalPrice = Number(totalPrice).toFixed(2)
-                        finalPrice = numeral(finalPrice).format('0,0 $');
+                        let finalPrice = numeral(totalPrice).format('0,0.00 $');
                         totalPriceElement.innerHTML = `Total price (including state tax ${tax}%) is ${finalPrice}`
                         totalPriceElement.classList.remove('is-hidden')
                     });
