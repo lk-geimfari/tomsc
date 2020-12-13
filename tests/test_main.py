@@ -6,12 +6,12 @@ from backend.main import app, calculate_discount_price, get_tax_by_state
 client = TestClient(app)
 
 
-def test_root_without_params():
+def test_index_without_params():
     response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {
         "tax": 0.0,
-        "state": "",
+        "state": None,
         "discount_price": 0.0,
         "total_price": 0.0
     }
@@ -27,14 +27,13 @@ def test_root_without_params():
         (1, 60000, "CA", 55207.5),
     ],
 )
-def test_root_with_params(amount, price, state, expected):
+def test_index_with_params(amount, price, state, expected):
     response = client.get(f"/?amount={amount}&price={price}&state={state}")
     assert response.status_code == 200
     data = response.json()
     assert data['total_price'] == expected
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize(
     "state,expected",
     [
@@ -45,12 +44,11 @@ def test_root_with_params(amount, price, state, expected):
         ("CA", 8.25),
     ],
 )
-async def test_get_tax_by_state(state, expected):
-    result = await get_tax_by_state(state)
+def test_get_tax_by_state(state, expected):
+    result = get_tax_by_state(state)
     assert result == expected
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize(
     "amount, price, discount_price",
     [
@@ -62,6 +60,6 @@ async def test_get_tax_by_state(state, expected):
         (2, 35_000, 59_500.0),
     ],
 )
-async def test_calculate_discount_price(amount, price, discount_price):
-    result = await calculate_discount_price(amount, price)
+def test_calculate_discount_price(amount, price, discount_price):
+    result = calculate_discount_price(amount, price)
     assert result == discount_price

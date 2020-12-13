@@ -1,7 +1,10 @@
 from fastapi import FastAPI
+from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# Disable CORS Protection for development proposes.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -12,9 +15,12 @@ app.add_middleware(
 
 
 @app.get("/")
-async def root(amount: int = 1, price: float = 0.0, state: str = ""):
-    tax = await get_tax_by_state(state)
-    price = await calculate_discount_price(amount, price)
+async def index(amount: int = 1,
+                price: float = 0.0,
+                state: Optional[str] = None):
+
+    tax = get_tax_by_state(state)
+    price = calculate_discount_price(amount, price)
 
     return {
         "tax": tax,
@@ -24,22 +30,32 @@ async def root(amount: int = 1, price: float = 0.0, state: str = ""):
     }
 
 
-async def get_tax_by_state(state_code: str = "") -> float:
-    states = {
-        "UT": 6.85,
-        "NV": 8.0,
-        "TX": 6.25,
-        "AL": 4.0,
-        "CA": 8.25,
-    }
+def get_tax_by_state(state_code: Optional[str] = None) -> float:
+    """Returns tax for state by state code.
+
+    :param state_code: The code of state.
+    :return: Tax.
+    """
     try:
+        states = {
+            "UT": 6.85,
+            "NV": 8.0,
+            "TX": 6.25,
+            "AL": 4.0,
+            "CA": 8.25,
+        }
         return states[state_code]
     except KeyError:
         return 0.0
 
 
-async def calculate_discount_price(amount: int = 1,
-                                   price: float = 0.0) -> float:
+def calculate_discount_price(amount: int = 1, price: float = 0.0) -> float:
+    """Calculate discount based on amount of items and price per item.
+
+    :param amount: Amount of items.
+    :param price: Pricer per item.
+    :return: Price with discount.
+    """
     if amount <= 0:
         return 0
 
