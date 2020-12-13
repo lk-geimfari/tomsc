@@ -1,6 +1,7 @@
 ## Preview
 
-<img width="1481" alt="Screenshot 2020-12-12 at 14 47 50" src="https://user-images.githubusercontent.com/15812620/101983035-15de2c00-3c89-11eb-95a4-86e253df1948.png">
+<img width="1399" alt="Screenshot 2020-12-13 at 13 15 39" src="https://user-images.githubusercontent.com/15812620/102008961-569b7b00-3d45-11eb-9985-1b04be8b0deb.png">
+
 
 
 ## Prerequisites
