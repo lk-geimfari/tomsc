@@ -1,9 +1,7 @@
 ## Preview
 
-<img width="1399" alt="Screenshot 2020-12-13 at 13 15 39" src="https://user-images.githubusercontent.com/15812620/102008961-569b7b00-3d45-11eb-9985-1b04be8b0deb.png">
+<img width="1405" alt="Screenshot 2020-12-13 at 13 30 41" src="https://user-images.githubusercontent.com/15812620/102009280-703dc200-3d47-11eb-8777-48c2d09ef39e.png">
 
-
-Nope, it's not a bug. The total price also includes a discount.
 
 ## Prerequisites
 
@@ -32,7 +30,7 @@ Run a container based on your image:
 docker run --name tomsc -p 80:80 tomsc
 ```
 
-Now you can use frontend, just open file `fronted/index.html` in your browser.
+Now you can use frontend, just open file `fronted/index.html` in your browser or just go to [isaak.dev/tomsc/frontend/](https://isaak.dev/tomsc/frontend/)
 
 
 ## Tests
