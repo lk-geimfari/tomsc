@@ -3,6 +3,7 @@
 <img width="1399" alt="Screenshot 2020-12-13 at 13 15 39" src="https://user-images.githubusercontent.com/15812620/102008961-569b7b00-3d45-11eb-9985-1b04be8b0deb.png">
 
 
+Nope, it's not a bug. The total price also includes a discount.
 
 ## Prerequisites
 
